@@ -4,8 +4,9 @@
   "description": "A public bus trasnport service",
   "main": "server/index.js",
   "scripts": {
-    "start:dev": "set DEBUG=dev && babel-watch ./server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "set DEBUG=dev && cross-env NODE_ENV=development babel-watch ./server/index.js",
+    "test": "cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test nyc --reporter=text mocha --timeout 10000 -c server/test --require @babel/register --exit",
+    "migrate": "set DEBUG=dev && babel-node ./server/src/schema/migration"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "babel-watch": "^7.0.0",
