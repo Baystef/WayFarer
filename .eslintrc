@@ -2,7 +2,8 @@
   "extends": "airbnb-base",
   "rules": {
     "no-unused-expressions":"off",
-    "radix": "off"
+    "radix": "off",
+    "camelcase": "off"
   },
   "env": {
     "mocha": true

@@ -1,8 +1,15 @@
 import '@babel/polyfill';
 import express from 'express';
-import log from './src/utils/log';
+import morgan from 'morgan';
+import routes from './src/routes';
+import { log } from './src/utils';
 
 const app = express();
+
+app.use(morgan('dev'));
+app.use(express.json());
+
+app.use('/api/v1', routes);
 
 
 app.get('/', (req, res) => {
