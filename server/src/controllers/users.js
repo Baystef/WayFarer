@@ -1,6 +1,8 @@
 import { Model } from '../models';
 import { Auth } from '../utils';
-import { conflictResponse, internalErrREesponse, successResponse } from '../utils/response';
+import {
+  conflictResponse, internalErrREesponse, unauthorizedResponse, successResponse,
+} from '../utils/response';
 
 
 class Users {
@@ -32,6 +34,25 @@ class Users {
       if (error.routine === '_bt_check_unique') {
         return conflictResponse(res, 'User already exists');
       }
+      return internalErrREesponse(res);
+    }
+  }
+
+  static async signIn(req, res) {
+    const { email, password } = req.body;
+    const columns = 'id, email, password, is_admin';
+    const clause = `WHERE email='${email}'`;
+    try {
+      const data = await Users.Model().select(columns, clause);
+      if (!data[0]) return unauthorizedResponse(res, 'Invalid Credentials');
+      if (!Auth.compare(password, data[0].password)) {
+        return unauthorizedResponse(res, 'Invalid Credentials');
+      }
+      const { id, is_admin } = data[0];
+      const output = { id, email, is_admin };
+      const token = Auth.generateToken({ ...output });
+      return successResponse(res, 200, { token, ...output });
+    } catch (error) {
       return internalErrREesponse(res);
     }
   }

@@ -1,14 +1,17 @@
 import { Router } from 'express';
 import Users from '../controllers/users';
-import UserValidate from '../middleware/user-validate';
+import Validate from '../middleware/validate';
 
 const router = Router();
 
 // Import validators and controllers
-const { signUp } = Users;
-const { signupValidate, checkValidationResult } = UserValidate;
+const { signUp, signIn } = Users;
+const { validate, checkValidationResult } = Validate;
 
 // New User Signup
-router.post('/signup', signupValidate('signup'), checkValidationResult, signUp);
+router.post('/signup', validate('signup'), checkValidationResult, signUp);
+
+// User signin
+router.post('/signin', validate('signin'), checkValidationResult, signIn);
 
 export default router;

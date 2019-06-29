@@ -186,7 +186,97 @@ describe('POST auth/signup', () => {
   });
 });
 
-// describe('POST auth/signin', () => {
-//   it('should signin user if user exists', async () => {
-//   });
-// });
+describe('POST auth/signin', () => {
+  it('should signin if user exists', (done) => {
+    const user = {
+      email: 'donjazzy@yahoo.com',
+      password: 'secret10',
+    };
+    request.post('/api/v1/auth/signin').send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.status).to.equal('success');
+        expect(res.body.data.token).to.exist;
+        done();
+      });
+  });
+
+  it('should not signin if password is invalid', (done) => {
+    const user = {
+      email: 'donjazzy@yahoo.com',
+      password: 'invalid',
+    };
+    request.post('/api/v1/auth/signin').send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Invalid Credentials');
+        done();
+      });
+  });
+
+  it('should not signin user if user does not exist', (done) => {
+    const user = {
+      email: 'peperenpe@gmail.com',
+      password: 'notexist1',
+    };
+    request.post('/api/v1/auth/signin').send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Invalid Credentials');
+        done();
+      });
+  });
+
+  it('should not signin if email is missing', (done) => {
+    const user = {
+      password: 'noemail5',
+    };
+    request.post('/api/v1/auth/signin').send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Email is required');
+        done();
+      });
+  });
+
+  it('should not signin if password is missing', (done) => {
+    const user = {
+      email: 'nopass@hotmail.com',
+    };
+    request.post('/api/v1/auth/signin').send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Password is required');
+        done();
+      });
+  });
+
+  it('should not signin if email is invalid', (done) => {
+    const user = {
+      email: 'nopass@hot',
+      password: 'invalid3',
+    };
+    request.post('/api/v1/auth/signin').send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Invalid Email Address');
+        done();
+      });
+  });
+});

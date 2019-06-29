@@ -1,12 +1,13 @@
 import { check, validationResult } from 'express-validator';
 import { badRequestResponse } from '../utils/response';
+import signinValidate from './auth-validate';
 
-class UserValidate {
+class Validate {
   /**
-   * @description Validates all fields in signup request body
+   * @description Validates all fields request body
    * @param {string} route Route to be validated
    */
-  static signupValidate(route) {
+  static validate(route) {
     switch (route) {
       case 'signup':
         return [
@@ -53,6 +54,9 @@ class UserValidate {
             .withMessage('Password must contain letters and atleast 1 number'),
         ];
 
+      case 'signin':
+        return signinValidate;
+
       default:
         return [];
     }
@@ -73,4 +77,4 @@ class UserValidate {
   }
 }
 
-export default UserValidate;
+export default Validate;
