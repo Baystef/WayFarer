@@ -1,3 +1,4 @@
 import Users from './users';
+import Buses from './buses';
 
-export default { Users };
+export { Users, Buses };

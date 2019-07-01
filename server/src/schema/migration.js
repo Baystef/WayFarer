@@ -1,6 +1,9 @@
 import '@babel/polyfill';
 import { pool } from '../models';
-import log from '../utils/log';
+import Admin from './admin';
+import { log } from '../utils';
+
+const { seedAdmin } = Admin;
 
 const migration = async () => {
   try {
@@ -56,6 +59,11 @@ const migration = async () => {
     log('Creating tables...');
     await pool.query(createTables);
     log('Tables created successfully!');
+
+    log('Creating Admin...');
+    seedAdmin();
+    log('Admin Created!');
+    
   } catch (error) {
     log(error.message);
   }
