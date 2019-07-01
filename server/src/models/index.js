@@ -7,8 +7,8 @@ const env = process.env.NODE_ENV;
 types.setTypeParser(1700, value => parseFloat(value));
 log(env);
 if (process.env && env === 'test') {
-  config({ path: `.env.${process.env.NODE_ENV}` });
-} else if (env === 'development' || env === 'production') {
+  config({ path: `.env.${env}` });
+} else {
   config();
 }
 
@@ -16,6 +16,9 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+pool.on('connect', () => {
+  log(`Connection successful to::::${process.env.DATABASE_URL}`);
+});
 
 class Model {
   constructor(table) {
