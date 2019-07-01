@@ -2,6 +2,7 @@ import { check, validationResult } from 'express-validator';
 import { badRequestResponse } from '../utils/response';
 import signinValidate from './auth-validate';
 import busesValidate from './buses-validate';
+import tripsValidate from './trips-validate';
 
 class Validate {
   /**
@@ -60,6 +61,9 @@ class Validate {
 
       case 'addBus':
         return busesValidate;
+
+      case 'createTrip':
+        return tripsValidate;
 
       default:
         return [];

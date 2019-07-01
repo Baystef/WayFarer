@@ -24,9 +24,6 @@ class Model {
   constructor(table) {
     this.table = table;
     this.pool = pool;
-    this.pool.on('connect', () => {
-      log(`Connection successful to::::${process.env.DATABASE_URL}`);
-    });
     this.pool.on('error', (err) => {
       log('Unexpected error on idle client', err);
       process.exit(-1);
