@@ -35,6 +35,16 @@ class Trips {
       return internalErrREesponse(res);
     }
   }
+
+  static async getAllTrips(req, res) {
+    try {
+      const data = await Trips.tripModel().select('*');
+      if (!data[0]) return nullResponse(res, 'No trips available');
+      return successResponse(res, 200, data);
+    } catch (error) {
+      return internalErrREesponse(res);
+    }
+  }
 }
 
 export default Trips;

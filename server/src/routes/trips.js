@@ -5,10 +5,12 @@ import Validate from '../middleware/validate';
 
 const router = Router();
 
-const { createTrip } = Trips;
+const { createTrip, getAllTrips } = Trips;
 const { validate, checkValidationResult } = Validate;
-const { verifyAdmin } = Authorization;
+const { verifyAdmin, verifyUser } = Authorization;
 
 router.post('/', verifyAdmin, validate('createTrip'), checkValidationResult, createTrip);
+
+router.get('/', verifyUser, getAllTrips);
 
 export default router;

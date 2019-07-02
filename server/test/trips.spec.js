@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import { pool } from '../src/models';
 import server from '../index';
 
 const { expect } = chai;
@@ -208,5 +209,35 @@ describe('POST /trips', () => {
         expect(res.body.error).to.equal('Fare should be between (\u20A6)50 and (\u20A6)10,000');
         done();
       });
+  });
+});
+
+describe('GET /trips', () => {
+  it('should retrieve all trips successfully', (done) => {
+    request.get('/api/v1/trips').set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal('success');
+        expect(res.body).to.be.an('object');
+        expect(res.body.data).to.be.an('array');
+        done();
+      });
+  });
+
+  describe('GET /trips', () => {
+    before((done) => {
+      pool.query('TRUNCATE ONLY trips RESTART IDENTITY CASCADE');
+      done();
+    });
+    it('should return an error if no trips are available', (done) => {
+      request.get('/api/v1/trips').set('Authorization', `Bearer ${adminToken}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.status).to.equal('error');
+          expect(res.body).to.be.an('object');
+          expect(res.body.error).to.equal('No trips available');
+          done();
+        });
+    });
   });
 });
