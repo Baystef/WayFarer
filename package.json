@@ -6,6 +6,7 @@
   "scripts": {
     "start:dev": "set DEBUG=dev && cross-env NODE_ENV=development babel-watch ./server/index.js",
     "test": "cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test nyc --reporter=text mocha --timeout 10000 -c server/test --require @babel/register --exit",
+    "nyc": "nyc --reporter=lcov npm test && nyc report --reporter=text-lcov | coveralls",
     "migrate": "set DEBUG=dev && babel-node ./server/src/schema/migration"
   },
   "repository": {
