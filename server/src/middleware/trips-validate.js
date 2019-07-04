@@ -1,4 +1,4 @@
-import { check, param } from 'express-validator';
+import { check, param, query } from 'express-validator';
 
 const createTripValidate = [
   check('bus_id').not().isEmpty()
@@ -33,4 +33,11 @@ const cancelTripValidate = [
     .withMessage('Invalid trip ID'),
 ];
 
-export { createTripValidate, cancelTripValidate };
+const getTripValidate = [
+  query('origin').optional().matches(/^[\w',-\\/.\s]*$/)
+    .withMessage('Origin must be alphabets')
+    .isLength({ min: 3, max: 25 })
+    .withMessage('Origin should be between 3 and 25 characters'),
+];
+
+export { createTripValidate, cancelTripValidate, getTripValidate };

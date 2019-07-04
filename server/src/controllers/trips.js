@@ -4,6 +4,7 @@ import {
 } from '../utils/response';
 import { log } from '../utils';
 
+
 class Trips {
   static tripModel() {
     return new Model('trips');
@@ -39,9 +40,20 @@ class Trips {
 
   static async getAllTrips(req, res) {
     try {
-      const data = await Trips.tripModel().select('*');
-      if (!data[0]) return nullResponse(res, 'No trips available');
-      return successResponse(res, 200, data);
+      const { origin } = req.query;
+      switch (false) {
+        case !origin: {
+          const data = await Trips.tripModel().select('*', `WHERE origin='${origin}'`);
+          if (!data[0]) return nullResponse(res, 'No trip available from this location');
+          return successResponse(res, 200, data);
+        }
+
+        default: {
+          const data = await Trips.tripModel().select('*');
+          if (!data[0]) return nullResponse(res, 'No trips available');
+          return successResponse(res, 200, data);
+        }
+      }
     } catch (error) {
       return internalErrREesponse(res);
     }
