@@ -281,9 +281,20 @@ describe('GET /trips', () => {
       });
   });
 
-  describe('GET /trips?origin', () => {
+  describe('GET /trips?query', () => {
     it('should return a trip that meets the origin query conditon', (done) => {
       request.get('/api/v1/trips?origin=Abule Egba').set('Authorization', `Bearer ${adminToken}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.status).to.equal('success');
+          expect(res.body).to.be.an('object');
+          expect(res.body.data).to.be.an('array');
+          done();
+        });
+    });
+
+    it('should return a trip that meets the destination query conditon', (done) => {
+      request.get('/api/v1/trips?destination=Lekki').set('Authorization', `Bearer ${adminToken}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.status).to.equal('success');

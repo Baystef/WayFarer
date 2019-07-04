@@ -40,11 +40,17 @@ class Trips {
 
   static async getAllTrips(req, res) {
     try {
-      const { origin } = req.query;
+      const { origin, destination } = req.query;
       switch (false) {
         case !origin: {
           const data = await Trips.tripModel().select('*', `WHERE origin='${origin}'`);
           if (!data[0]) return nullResponse(res, 'No trip available from this location');
+          return successResponse(res, 200, data);
+        }
+
+        case !destination: {
+          const data = await Trips.tripModel().select('*', `WHERE destination='${destination}'`);
+          if (!data[0]) return nullResponse(res, 'No trips available to this destination');
           return successResponse(res, 200, data);
         }
 
