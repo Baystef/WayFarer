@@ -11,7 +11,7 @@ const { verifyAdmin, verifyUser } = Authorization;
 
 router.post('/', verifyAdmin, validate('createTrip'), checkValidationResult, createTrip);
 
-router.get('/', verifyUser, getAllTrips);
+router.get('/', verifyUser, validate('getTrip'), checkValidationResult, getAllTrips);
 
 router.patch('/:trip_id', verifyAdmin, validate('cancelTrip'), checkValidationResult, cancelTrip);
 
