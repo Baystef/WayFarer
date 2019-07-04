@@ -1,6 +1,6 @@
-import { check } from 'express-validator';
+import { check, param } from 'express-validator';
 
-export default [
+const createTripValidate = [
   check('bus_id').not().isEmpty()
     .withMessage('Bus ID is required')
     .isNumeric()
@@ -27,3 +27,10 @@ export default [
     .isInt({ min: 50, max: 10000 })
     .withMessage('Fare should be between (\u20A6)50 and (\u20A6)10,000'),
 ];
+
+const cancelTripValidate = [
+  param('trip_id').isInt({ min: 1 })
+    .withMessage('Invalid trip ID'),
+];
+
+export { createTripValidate, cancelTripValidate };
