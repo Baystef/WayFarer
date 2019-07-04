@@ -38,6 +38,11 @@ const getTripValidate = [
     .withMessage('Origin must be alphabets')
     .isLength({ min: 3, max: 25 })
     .withMessage('Origin should be between 3 and 25 characters'),
+
+  query('destination').optional().matches(/^[\w',-\\/.\s]*$/)
+    .withMessage('Destination must be alphabets')
+    .isLength({ min: 3, max: 25 })
+    .withMessage('Destination should be between 3 and 25 characters'),
 ];
 
 export { createTripValidate, cancelTripValidate, getTripValidate };
