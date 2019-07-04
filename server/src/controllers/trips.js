@@ -2,6 +2,7 @@ import { Model } from '../models';
 import {
   conflictResponse, internalErrREesponse, successResponse, nullResponse,
 } from '../utils/response';
+import { log } from '../utils';
 
 class Trips {
   static tripModel() {
@@ -41,6 +42,25 @@ class Trips {
       const data = await Trips.tripModel().select('*');
       if (!data[0]) return nullResponse(res, 'No trips available');
       return successResponse(res, 200, data);
+    } catch (error) {
+      return internalErrREesponse(res);
+    }
+  }
+
+  static async cancelTrip(req, res) {
+    const trip_id = Number(req.params.trip_id);
+    const clause = `WHERE id=${trip_id}
+    RETURNING *`;
+    try {
+      const data = await Trips.tripModel().select('*', `WHERE id=${trip_id}`);
+      if (!data[0]) {
+        return nullResponse(res, 'Trip does not exist');
+      }
+      if (data[0].status === 'cancelled') {
+        return conflictResponse(res, 'Trip is already cancelled');
+      }
+      await Trips.tripModel().update('status=\'cancelled\'', clause);
+      return successResponse(res, 200, { message: 'Trip cancelled successfully' });
     } catch (error) {
       return internalErrREesponse(res);
     }

@@ -212,6 +212,63 @@ describe('POST /trips', () => {
   });
 });
 
+describe('PATCH /trips', () => {
+  it('should cancel a trip successfully', (done) => {
+    request.patch('/api/v1/trips/1').set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.status).to.equal('success');
+        expect(res.body.data.message).to.equal('Trip cancelled successfully');
+        done();
+      });
+  });
+
+  it('should throw an error if trip is cancelled already', (done) => {
+    request.patch('/api/v1/trips/1').set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(409);
+        expect(res.body).to.be.an('object');
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Trip is already cancelled');
+        done();
+      });
+  });
+
+  it('should throw an error if trip id is not a number', (done) => {
+    request.patch('/api/v1/trips/one').set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Invalid trip ID');
+        done();
+      });
+  });
+
+  it('should throw an error if trip id is negative', (done) => {
+    request.patch('/api/v1/trips/-1').set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Invalid trip ID');
+        done();
+      });
+  });
+
+  it('should throw an error if trip does not exist', (done) => {
+    request.patch('/api/v1/trips/1000').set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Trip does not exist');
+        done();
+      });
+  });
+});
+
 describe('GET /trips', () => {
   it('should retrieve all trips successfully', (done) => {
     request.get('/api/v1/trips').set('Authorization', `Bearer ${adminToken}`)
@@ -224,7 +281,7 @@ describe('GET /trips', () => {
       });
   });
 
-  describe('GET /trips', () => {
+  describe('CANNOT GET /trips', () => {
     before((done) => {
       pool.query('TRUNCATE ONLY trips RESTART IDENTITY CASCADE');
       done();
