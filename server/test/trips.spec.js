@@ -29,7 +29,7 @@ describe('POST /trips', () => {
 
   it('should create a new trip successfully', (done) => {
     const newTrip = {
-      bus_id: 1,
+      bus_id: 4,
       origin: 'Abule Egba',
       destination: 'Lekki',
       fare: 1000,
@@ -46,7 +46,7 @@ describe('POST /trips', () => {
 
   it('should throw error if trip already exists', (done) => {
     const newTrip = {
-      bus_id: 1,
+      bus_id: 4,
       origin: 'Abule Egba',
       destination: 'Lekki',
       fare: 1000,
