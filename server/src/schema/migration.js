@@ -46,6 +46,7 @@ const migration = async () => {
       id SERIAL PRIMARY KEY,
       trip_id INTEGER NOT NULL,
       user_id INTEGER NOT NULL,
+      seat_number INTEGER NOT NULL CHECK(seat_number > 0),
       created_on TIMESTAMP NOT NULL DEFAULT NOW(),
       FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

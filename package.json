@@ -5,9 +5,11 @@
   "main": "server/index.js",
   "scripts": {
     "start:dev": "set DEBUG=dev && cross-env NODE_ENV=development babel-watch ./server/index.js",
-    "test": "cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test nyc --reporter=text mocha --timeout 10000 -c server/test --require @babel/register --exit",
+    "test": "cross-env NODE_ENV=test npm run migrate:seed && cross-env NODE_ENV=test nyc --reporter=text mocha --timeout 10000 -c server/test --require @babel/register --exit",
     "nyc": "nyc --reporter=lcov npm test && nyc report --reporter=text-lcov | coveralls",
-    "migrate": "set DEBUG=dev && babel-node ./server/src/schema/migration"
+    "migrate": "set DEBUG=dev && babel-node ./server/src/schema/migration",
+    "seed": "set DEBUG=dev && babel-node ./server/src/schema/seed",
+    "migrate:seed": "set DEBUG=dev && npm run migrate && npm run seed" 
   },
   "repository": {
     "type": "git",

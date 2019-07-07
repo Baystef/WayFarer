@@ -42,8 +42,8 @@ class Authorization {
     try {
       const token = req.get('Authorization').replace('Bearer ', '');
       const decoded = verifyToken(token);
-      const { id } = decoded;
-      if (!id) {
+      req.user = decoded;
+      if (!req.user.id) {
         return forbiddenResponse(res, 'Access Denied');
       }
       return next();
