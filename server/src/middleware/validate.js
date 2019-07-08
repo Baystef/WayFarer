@@ -3,7 +3,7 @@ import { badRequestResponse } from '../utils/response';
 import signinValidate from './auth-validate';
 import busesValidate from './buses-validate';
 import { createTripValidate, cancelTripValidate, getTripValidate } from './trips-validate';
-import { makeBookingValidate, deleteBookingValidate } from './bookings-validate';
+import { makeBookingValidate, deleteBookingValidate, changeSeatValidate } from './bookings-validate';
 
 
 class Validate {
@@ -78,6 +78,9 @@ class Validate {
 
       case 'deleteBooking':
         return deleteBookingValidate;
+
+      case 'changeSeat':
+        return changeSeatValidate;
 
       default:
         return [];

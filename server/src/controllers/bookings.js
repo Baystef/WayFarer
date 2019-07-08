@@ -121,6 +121,40 @@ class Bookings {
       return internalErrREesponse(res);
     }
   }
+
+  static async changeSeat(req, res) {
+    const { bookingId } = req.params;
+    const { seat_number } = req.body;
+    const { id } = req.user;
+    const column = 'b.id AS booking_id, trip_id, user_id, seat_number, bus_id';
+    const clause = `b JOIN trips t ON t.id = trip_id
+    WHERE b.id=${bookingId} AND user_id=${id}`;
+    const seatClause = `WHERE id=${bookingId} AND user_id=${id}`;
+
+    try {
+      const data = await Bookings.bookModel().select(column, clause);
+      if (data[0]) {
+        const { trip_id, bus_id } = data[0];
+        const trip = await Bookings.bookModel().select('*', `WHERE trip_id=${trip_id}`);
+        const booked = trip.find(el => el.seat_number === seat_number);
+        if (booked) {
+          // Get all already booked seats
+          const occupiedSeats = trip.map(book => book.seat_number);
+          // Get the capacity of the bus been used for the trip
+          const busCap = await Bookings.busModel().select('capacity', `WHERE id=${bus_id}`);
+          const { capacity } = busCap[0];
+          // Get the number of free seats left on a bus for a particular trip
+          const availableSeats = getFreeSeats(occupiedSeats, capacity);
+          return conflictResponse(res, `Seat is already occupied. Available seat(s): (${availableSeats.join(', ')})`);
+        }
+        await Bookings.bookModel().update(`seat_number=${seat_number}`, seatClause);
+        return successResponse(res, 200, { message: 'Seat number updated successfully' });
+      }
+      return nullResponse(res, 'You have no active booking with that ID');
+    } catch (error) {
+      return internalErrREesponse(res);
+    }
+  }
 }
 
 export default Bookings;

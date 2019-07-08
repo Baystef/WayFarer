@@ -19,4 +19,9 @@ const deleteBookingValidate = [
     .withMessage('Booking ID is invalid'),
 ];
 
-export { makeBookingValidate, deleteBookingValidate };
+const changeSeatValidate = [
+  makeBookingValidate[1],
+  ...deleteBookingValidate,
+];
+
+export { makeBookingValidate, deleteBookingValidate, changeSeatValidate };

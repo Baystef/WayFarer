@@ -121,7 +121,38 @@ describe('GET /bookings', () => {
   });
 });
 
-describe('DELETE /bookings', () => {
+describe('PATCH /bookings/:bookingId', () => {
+  it('should update a seat number successfully', (done) => {
+    const seat = {
+      seat_number: 2,
+    };
+    request.patch('/api/v1/bookings/1').send(seat)
+      .set('Authorization', `Bearer ${user1token}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.data.message).to.equal('Seat number updated successfully');
+        done();
+      });
+  });
+
+  it('should throw an error if booking does not exist', (done) => {
+    const seat = {
+      seat_number: 3,
+    };
+    request.patch('/api/v1/bookings/3').send(seat)
+      .set('Authorization', `Bearer ${user1token}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('You have no active booking with that ID');
+        done();
+      });
+  });
+});
+
+describe('DELETE /bookings/:bookingId', () => {
   it('should delete a booking successfully', (done) => {
     request.delete('/api/v1/bookings/1').set('Authorization', `Bearer ${user1token}`)
       .end((err, res) => {
