@@ -1,6 +1,6 @@
-import { check } from 'express-validator';
+import { check, param } from 'express-validator';
 
-export default [
+const makeBookingValidate = [
   check('trip_id').not().isEmpty()
     .withMessage('Trip ID is required')
     .isInt({ min: 1 })
@@ -11,3 +11,12 @@ export default [
     .isInt({ min: 1 })
     .withMessage('Seat number is invalid'),
 ];
+
+const deleteBookingValidate = [
+  param('bookingId').not().isEmpty()
+    .withMessage('Booking ID parameter is required')
+    .isInt({ min: 1 })
+    .withMessage('Booking ID is invalid'),
+];
+
+export { makeBookingValidate, deleteBookingValidate };

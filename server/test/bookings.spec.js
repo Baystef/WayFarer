@@ -120,3 +120,26 @@ describe('GET /bookings', () => {
       });
   });
 });
+
+describe('DELETE /bookings', () => {
+  it('should delete a booking successfully', (done) => {
+    request.delete('/api/v1/bookings/1').set('Authorization', `Bearer ${user1token}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.data.message).to.equal('Booking deleted successfully');
+        done();
+      });
+  });
+
+  it('should throw an error if booking ID is not an integer', (done) => {
+    request.delete('/api/v1/bookings/a').set('Authorization', `Bearer ${user1token}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Booking ID is invalid');
+        done();
+      });
+  });
+});
