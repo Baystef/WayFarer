@@ -105,6 +105,22 @@ class Bookings {
       return internalErrREesponse(res);
     }
   }
+
+  static async deleteBooking(req, res) {
+    const { bookingId } = req.params;
+    const { id } = req.user;
+    const clause = `WHERE id=${bookingId} AND user_id=${id}`;
+    try {
+      const data = await Bookings.bookModel().select('*', clause);
+      if (data[0]) {
+        await Bookings.bookModel().delete(clause);
+        return successResponse(res, 200, { message: 'Booking deleted successfully' });
+      }
+      return nullResponse(res, 'You have no active booking with that ID');
+    } catch (error) {
+      return internalErrREesponse(res);
+    }
+  }
 }
 
 export default Bookings;
