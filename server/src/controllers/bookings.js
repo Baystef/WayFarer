@@ -82,6 +82,29 @@ class Bookings {
       return internalErrREesponse(res);
     }
   }
+
+  static async getBookings(req, res) {
+    const { id, is_admin } = req.user;
+    const columns = `b.id AS booking_id, trip_id, user_id, seat_number, 
+    bus_id, trip_date, first_name, last_name, email`;
+    const clause = `b
+    join trips t ON t.id = trip_id
+    join users u ON u.id = user_id`;
+
+    try {
+      if (!is_admin) {
+        const data = await Bookings.bookModel().select(columns, `${clause} WHERE user_id=${id}`);
+        if (!data[0]) {
+          return nullResponse(res, 'You have no active bookings');
+        }
+        return successResponse(res, 200, data);
+      }
+      const data = await Bookings.bookModel().select(columns, clause);
+      return successResponse(res, 200, data);
+    } catch (error) {
+      return internalErrREesponse(res);
+    }
+  }
 }
 
 export default Bookings;
