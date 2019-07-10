@@ -5,11 +5,14 @@
   "main": "server/index.js",
   "scripts": {
     "start:dev": "set DEBUG=dev && cross-env NODE_ENV=development babel-watch ./server/index.js",
+    "start": "set DEBUG=dev && node build/index.js",
+    "build": "babel server --out-dir build",
     "test": "cross-env NODE_ENV=test npm run migrate:seed && cross-env NODE_ENV=test nyc --reporter=text mocha --timeout 10000 -c server/test --require @babel/register --exit",
     "nyc": "nyc --reporter=lcov npm test && nyc report --reporter=text-lcov | coveralls",
     "migrate": "set DEBUG=dev && babel-node ./server/src/schema/migration",
+    "heroku:migrate": "node ./build/src/schema/migration",
     "seed": "set DEBUG=dev && babel-node ./server/src/schema/seed",
-    "migrate:seed": "set DEBUG=dev && npm run migrate && npm run seed" 
+    "migrate:seed": "set DEBUG=dev && npm run migrate && npm run seed"
   },
   "repository": {
     "type": "git",
@@ -47,7 +50,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "bcrypt": "^3.0.6",
-    "core-js": "^3.1.4",
     "cross-env": "^5.2.0",
     "debug": "^4.1.1",
     "dotenv": "^8.0.0",
@@ -55,7 +57,6 @@
     "express-validator": "^6.0.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
-    "pg": "^7.11.0",
-    "regenerator-runtime": "^0.13.2"
+    "pg": "^7.11.0"
   }
 }
