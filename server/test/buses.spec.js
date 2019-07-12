@@ -30,6 +30,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA458YU',
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
       capacity: 100,
     };
@@ -47,6 +48,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA458YU',
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
       capacity: 100,
     };
@@ -65,6 +67,7 @@ describe('POST /buses', () => {
   it('should throw error if number plate is missing', (done) => {
     const newBus = {
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
       capacity: 100,
     };
@@ -83,6 +86,7 @@ describe('POST /buses', () => {
   it('should throw error if manufacturer is missing', (done) => {
     const newBus = {
       number_plate: 'DA458YU',
+      year: 2010,
       model: 'Arial150',
       capacity: 100,
     };
@@ -98,10 +102,30 @@ describe('POST /buses', () => {
       });
   });
 
+  it('should throw error if year is missing', (done) => {
+    const newBus = {
+      number_plate: 'DA458YU',
+      manufacturer: 'volvo',
+      model: 'Arial150',
+      capacity: 100,
+    };
+    request.post('/api/v1/buses').send(newBus)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Year is required');
+        done();
+      });
+  });
+
   it('should throw error if model is missing', (done) => {
     const newBus = {
       number_plate: 'DA458YU',
       manufacturer: 'volvo',
+      year: 2010,
       capacity: 100,
     };
     request.post('/api/v1/buses').send(newBus)
@@ -120,6 +144,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA458YU',
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
     };
     request.post('/api/v1/buses').send(newBus)
@@ -138,6 +163,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA460',
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
       capacity: 100,
     };
@@ -157,6 +183,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA460YA',
       manufacturer: 'v',
+      year: 2010,
       model: 'Arial150',
       capacity: 100,
     };
@@ -176,6 +203,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA460YA',
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
       capacity: 'two',
     };
@@ -195,6 +223,7 @@ describe('POST /buses', () => {
     const newBus = {
       number_plate: 'DA460YA',
       manufacturer: 'volvo',
+      year: 2010,
       model: 'Arial150',
       capacity: 2,
     };
