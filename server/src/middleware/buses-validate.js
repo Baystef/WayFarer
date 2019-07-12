@@ -11,6 +11,14 @@ export default [
     .isLength({ min: 2, max: 25 })
     .withMessage('Manufacturer should be between 3 and 25 characters'),
 
+  check('year').not().isEmpty()
+    .withMessage('Year is required')
+    .trim()
+    .isNumeric()
+    .withMessage('Capacity must be an integer')
+    .isInt({ min: 2005, max: 2020 })
+    .withMessage('Year of manufacture must be between 2005 and 2020'),
+
   check('model').not().isEmpty()
     .withMessage('Model is required'),
 

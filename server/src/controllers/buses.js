@@ -10,10 +10,10 @@ class Buses {
 
   static async addBus(req, res) {
     const {
-      number_plate, manufacturer, model, capacity,
+      number_plate, manufacturer, year, model, capacity,
     } = req.body;
-    const columns = 'number_plate, manufacturer, model, capacity';
-    const values = `'${number_plate}', '${manufacturer}', '${model}', ${capacity}`;
+    const columns = 'number_plate, manufacturer, year, model, capacity';
+    const values = `'${number_plate}', '${manufacturer}', ${year}, '${model}', ${capacity}`;
     const clause = 'RETURNING *';
     try {
       const data = await Buses.Model().insert(columns, values, clause);

@@ -38,6 +38,7 @@ const migration = async () => {
       id SERIAL PRIMARY KEY,
       number_plate TEXT UNIQUE NOT NULL,
       manufacturer TEXT NOT NULL,
+      year INTEGER NOT NULL CHECK (year >= 2005 AND year <= 2020) , 
       model TEXT NOT NULL,
       capacity INTEGER NOT NULL
     );
@@ -64,7 +65,6 @@ const migration = async () => {
     log('Creating Admin...');
     seedAdmin();
     log('Admin Created!');
-    
   } catch (error) {
     log(error.message);
   }
