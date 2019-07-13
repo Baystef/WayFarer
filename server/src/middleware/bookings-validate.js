@@ -1,5 +1,8 @@
 import { check, param } from 'express-validator';
 
+/**
+ * @description Checks all fields of the bookings request bodyand parameter
+ */
 const makeBookingValidate = [
   check('trip_id').not().isEmpty()
     .withMessage('Trip ID is required')

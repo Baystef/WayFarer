@@ -2,10 +2,14 @@ import { Model } from '../models';
 import {
   conflictResponse, internalErrREesponse, successResponse, nullResponse,
 } from '../utils/response';
-import { log } from '../utils';
 
-
+/**
+ * @description houses the methods for the trips endpoint
+ */
 class Trips {
+  /**
+   * @description Creates the trips and buses Model instance
+   */
   static tripModel() {
     return new Model('trips');
   }
@@ -14,6 +18,12 @@ class Trips {
     return new Model('buses');
   }
 
+  /**
+  * @description Create a trip
+  * @param {object} req request object
+  * @param {object} res response object
+  * @returns {object} JSON response
+  */
   static async createTrip(req, res) {
     const {
       bus_id, origin, destination, fare,
@@ -38,6 +48,12 @@ class Trips {
     }
   }
 
+  /**
+  * @description Get all trips
+  * @param {object} req request object
+  * @param {object} res response object
+  * @returns {object} JSON response
+  */
   static async getAllTrips(req, res) {
     try {
       const { origin, destination } = req.query;
@@ -65,6 +81,12 @@ class Trips {
     }
   }
 
+  /**
+  * @description Cancel a trip
+  * @param {object} req request object
+  * @param {object} res response object
+  * @returns {object} JSON response
+  */
   static async cancelTrip(req, res) {
     const trip_id = Number(req.params.trip_id);
     const clause = `WHERE id=${trip_id}

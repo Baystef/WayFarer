@@ -4,8 +4,13 @@ import {
   conflictResponse, internalErrREesponse, unauthorizedResponse, successResponse,
 } from '../utils/response';
 
-
+/**
+ * @description houses the methods for the users endpoint
+ */
 class Users {
+  /**
+   * @description Creates the users Model instance
+   */
   static Model() {
     return new Model('users');
   }
@@ -38,6 +43,12 @@ class Users {
     }
   }
 
+  /**
+  * @description Sign-in existing user
+  * @param {object} req request object
+  * @param {object} res response object
+  * @returns {object}  JSON response
+  */
   static async signIn(req, res) {
     const { email, password } = req.body;
     const columns = 'id, email, password, is_admin';

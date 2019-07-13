@@ -1,8 +1,20 @@
+/**
+ * @param {object} res response object
+ * @param {Number} code status code
+ * @param {object} data data object
+ * @param {String} status status message
+ */
 const successResponse = (res, code, data, status = 'success') => res.status(code).json({
   status,
   data,
 });
 
+/**
+ * @description All Error responses
+ * @param {object} res response object
+ * @param {String} error error message
+ * @param {String} status status message
+ */
 const badRequestResponse = (res, error, status = 'error') => res.status(400).json({
   status,
   error: error || 'Bad request',

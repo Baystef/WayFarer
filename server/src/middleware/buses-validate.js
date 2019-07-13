@@ -1,5 +1,8 @@
 import { check } from 'express-validator';
 
+/**
+ * @description Checks all fields of the buses request body
+ */
 export default [
   check('number_plate').not().isEmpty()
     .withMessage('Number plate is required')

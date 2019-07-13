@@ -5,7 +5,6 @@ import Validate from '../middleware/validate';
 
 const router = Router();
 
-// Import validators and controllers
 const { addBus } = Buses;
 const { validate, checkValidationResult } = Validate;
 const { verifyAdmin } = Authorization;
