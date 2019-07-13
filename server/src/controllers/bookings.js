@@ -4,7 +4,14 @@ import {
   conflictResponse, internalErrREesponse, successResponse, nullResponse,
 } from '../utils/response';
 
+/**
+ * @description houses the methods for all booking endpoints
+ */
 class Bookings {
+  /**
+   * @description Creates the bookings, trips,
+   * users and buses Model instance
+   */
   static bookModel() {
     return new Model('bookings');
   }
@@ -21,6 +28,12 @@ class Bookings {
     return new Model('buses');
   }
 
+  /**
+   * @description Creates a booking on a trip
+   * @param {object} req request object
+   * @param {object} res response object
+   * @returns {object} JSON response
+   */
   static async bookTrip(req, res) {
     let { trip_id, seat_number } = req.body;
     const { id, email } = req.user;
@@ -83,6 +96,12 @@ class Bookings {
     }
   }
 
+  /**
+   * @description Get bookings
+   * @param {object} req request object
+   * @param {object} res response object
+   * @returns {object} JSON response
+   */
   static async getBookings(req, res) {
     const { id, is_admin } = req.user;
     const columns = `b.id AS booking_id, trip_id, user_id, seat_number, 
@@ -106,6 +125,12 @@ class Bookings {
     }
   }
 
+  /**
+   * @description Delete a booking
+   * @param {object} req request object
+   * @param {object} res response object
+   * @returns {object} JSON response
+   */
   static async deleteBooking(req, res) {
     const { bookingId } = req.params;
     const { id } = req.user;
@@ -122,6 +147,12 @@ class Bookings {
     }
   }
 
+  /**
+   * @description Change booked seat
+   * @param {object} req request object
+   * @param {object} res response object
+   * @returns {object} JSON response
+   */
   static async changeSeat(req, res) {
     const { bookingId } = req.params;
     const { seat_number } = req.body;

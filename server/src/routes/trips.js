@@ -9,10 +9,13 @@ const { createTrip, getAllTrips, cancelTrip } = Trips;
 const { validate, checkValidationResult } = Validate;
 const { verifyAdmin, verifyUser } = Authorization;
 
+// Create a trip
 router.post('/', verifyAdmin, validate('createTrip'), checkValidationResult, createTrip);
 
+// Get all trips
 router.get('/', verifyUser, validate('getTrip'), checkValidationResult, getAllTrips);
 
+// Cancel a trip
 router.patch('/:trip_id', verifyAdmin, validate('cancelTrip'), checkValidationResult, cancelTrip);
 
 export default router;

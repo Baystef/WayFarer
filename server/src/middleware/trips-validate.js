@@ -1,5 +1,8 @@
 import { check, param, query } from 'express-validator';
 
+/**
+ * @description Checks all fields of the trips request body, parameter and query
+ */
 const createTripValidate = [
   check('bus_id').not().isEmpty()
     .withMessage('Bus ID is required')

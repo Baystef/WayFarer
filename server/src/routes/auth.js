@@ -4,11 +4,10 @@ import Validate from '../middleware/validate';
 
 const router = Router();
 
-// Import validators and controllers
 const { signUp, signIn } = Users;
 const { validate, checkValidationResult } = Validate;
 
-// New User Signup
+// New user signup
 router.post('/signup', validate('signup'), checkValidationResult, signUp);
 
 // User signin

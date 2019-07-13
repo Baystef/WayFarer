@@ -1,10 +1,15 @@
 import '@babel/polyfill';
 import express from 'express';
 import morgan from 'morgan';
+import swaggerUI from 'swagger-ui-express';
+import yaml from 'yamljs';
 import routes from './src/routes';
 import { log } from './src/utils';
 
 const app = express();
+
+const swaggerDoc = yaml.load(`${process.cwd()}/swagger.yaml`);
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 app.use(morgan('dev'));
 app.use(express.json());

@@ -9,12 +9,16 @@ const { bookTrip, getBookings, deleteBooking, changeSeat } = Bookings;
 const { validate, checkValidationResult } = Validate;
 const { verifyUser } = Authorization;
 
+// Create new booking
 router.post('/', verifyUser, validate('makeBooking'), checkValidationResult, bookTrip);
 
+// Get all bookings
 router.get('/', verifyUser, getBookings);
 
+// Delete a booking
 router.delete('/:bookingId', verifyUser, validate('deleteBooking'), checkValidationResult, deleteBooking);
 
+// Change booked seat
 router.patch('/:bookingId', verifyUser, validate('changeSeat'), checkValidationResult, changeSeat);
 
 export default router;

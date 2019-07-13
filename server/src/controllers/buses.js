@@ -3,11 +3,23 @@ import {
   conflictResponse, internalErrREesponse, successResponse,
 } from '../utils/response';
 
+/**
+ * @description houses the method for the bus endpoint
+ */
 class Buses {
+  /**
+   * @description Creates the buses Model instance
+   */
   static Model() {
     return new Model('buses');
   }
 
+  /**
+   * @description Add new bus
+   * @param {object} req request object
+   * @param {object} res response object
+   * @returns {object} JSON response
+   */
   static async addBus(req, res) {
     const {
       number_plate, manufacturer, year, model, capacity,

@@ -1,6 +1,7 @@
 import { Model } from '../models';
 import { Auth, log } from '../utils';
 
+// Seeds the admin into the database
 class Admin {
   static Model() {
     return new Model('users');

@@ -1,0 +1,399 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: WayFarer
+  description: WayFarer is a public bus transportation booking server
+  contact: {}
+host: wayfarer-service.herokuapp.com
+basePath: /api/v1
+securityDefinitions: {}
+schemes:
+- https
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /auth/signup:
+    post:
+      description: Creates a new user on the database
+      summary: Signup Endpoint
+      tags:
+      - Misc
+      operationId: AuthSignupPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SignupEndpointRequest'
+      responses:
+        201:
+          description: ''
+          headers: {}
+  /auth/signin:
+    post:
+      description: Logs in and provides User or Admin with a token to access their respective resources
+      summary: Signin Endpoint
+      tags:
+      - Misc
+      operationId: AuthSigninPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SigninEndpointRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /buses:
+    post:
+      description: This endpoint adds new buses to the bus inventory
+      summary: Add Buses Endpoint
+      tags:
+      - Misc
+      operationId: BusesPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AddBusesEndpointRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /trips:
+    post:
+      description: This endpoint is utilized by only an admin to create new trips
+      summary: Create Trips Endpoint
+      tags:
+      - Misc
+      operationId: TripsPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreateTripsEndpointRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+    get:
+      description: This retrieves all available trips from the database provided that a Auth token is provided in the header by the user or admin
+      summary: Get All Trips Endpoint
+      tags:
+      - Misc
+      operationId: TripsGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /trips/{:trip_id}:
+    patch:
+      description: This endpoint is used by an Admin for cancelling existing trips
+      summary: Cancel Trip Endpoint
+      tags:
+      - Misc
+      operationId: Trips1Patch
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /bookings:
+    post:
+      description: This endpoint checks if there's an existing trip and then books a seat on that trip
+      summary: Make Booking Endpoint
+      tags:
+      - Misc
+      operationId: BookingsPost
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/MakeBookingEndpointRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+    get:
+      description: This endpoint returns all bookings from the database if signed-in user is the admin. If user is not admin, it gets only the booking(s) made by that user.
+      summary: Get Bookings Endpoint
+      tags:
+      - Misc
+      operationId: BookingsGet
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /bookings/{booking_id}:
+    delete:
+      description: This endpoint deletes a specific booking that was made by the current user `params = bookingId`
+      summary: Delete a Booking Endpoint
+      tags:
+      - Misc
+      operationId: Bookings39Delete
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+    patch:
+      description: This endpoint changes a users seat on a trip after the trip ha s been booked
+      summary: Change Seat Endpoint
+      tags:
+      - Misc
+      operationId: Bookings40Patch
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        default: Bearer {token}
+        type: string
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/ChangeSeatEndpointRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+definitions:
+  SignupEndpointRequest:
+    title: SignupEndpointRequest
+    example:
+      first_name: Ade
+      last_name: Daramola
+      email: steve2@gmail.com
+      password: tejuosho3
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - first_name
+    - last_name
+    - email
+    - password
+  SigninEndpointRequest:
+    title: SigninEndpointRequest
+    example:
+      email: admin@wayfarer.com
+      password: wayfarer10
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+  AddBusesEndpointRequest:
+    title: AddBusesEndpointRequest
+    example:
+      number_plate: DA485YZ
+      manufacturer: Mercedes
+      model: Polo150
+      capacity: 25
+    type: object
+    properties:
+      number_plate:
+        type: string
+      manufacturer:
+        type: string
+      model:
+        type: string
+      capacity:
+        type: integer
+        format: int32
+    required:
+    - number_plate
+    - manufacturer
+    - model
+    - capacity
+  CreateTripsEndpointRequest:
+    title: CreateTripsEndpointRequest
+    example:
+      bus_id: 1
+      origin: Ikeja Along
+      destination: Oshodi
+      fare: 500
+    type: object
+    properties:
+      bus_id:
+        type: integer
+        format: int32
+      origin:
+        type: string
+      destination:
+        type: string
+      fare:
+        type: integer
+        format: int32
+    required:
+    - bus_id
+    - origin
+    - destination
+    - fare
+  MakeBookingEndpointRequest:
+    title: MakeBookingEndpointRequest
+    example:
+      trip_id: 1
+      seat_number: 5
+    type: object
+    properties:
+      trip_id:
+        type: integer
+        format: int32
+      seat_number:
+        type: integer
+        format: int32
+    required:
+    - trip_id
+    - seat_number
+  ChangeSeatEndpointRequest:
+    title: ChangeSeatEndpointRequest
+    example:
+      seat_number: 7
+    type: object
+    properties:
+      seat_number:
+        type: integer
+        format: int32
+    required:
+    - seat_number
+tags:
+- name: Misc
+  description: ''
