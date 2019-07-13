@@ -23,6 +23,9 @@ const createTripValidate = [
     .isLength({ min: 2, max: 50 })
     .withMessage('Destination should be between 2 to 50 characters'),
 
+  check('trip_date').not().isEmpty()
+    .withMessage('Trip date is required'),
+
   check('fare').not().isEmpty()
     .withMessage('Fare is required')
     .isNumeric()

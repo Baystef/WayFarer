@@ -29,7 +29,7 @@ const migration = async () => {
       bus_id INTEGER NOT NULL,
       origin TEXT NOT NULL,
       destination TEXT NOT NULL,
-      trip_date TIMESTAMP NOT NULL DEFAULT NOW(),
+      trip_date DATE NOT NULL,
       fare NUMERIC(6, 2) NOT NULL,
       status TEXT DEFAULT 'active' NOT NULL
     );

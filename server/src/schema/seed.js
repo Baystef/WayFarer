@@ -14,9 +14,9 @@ const seed = async () => {
   INSERT INTO buses (number_plate, manufacturer, year, model, capacity) VALUES ('DV345BD', 'Mercedes', 2008, 'Marcopolo', 30);
   INSERT INTO buses (number_plate, manufacturer, year, model, capacity) VALUES ('DV345BC', 'Toyota', 2010, 'Hilux', 30);
 
-  INSERT INTO trips (bus_id, origin, destination, fare) VALUES (1, 'Ipaja', 'Lekki', 200);
-  INSERT INTO trips (bus_id, origin, destination, fare) VALUES (2, 'Ijaiye', 'Magodo', 300);
-  INSERT INTO trips (bus_id, origin, destination, fare) VALUES (3, 'Oshodi', 'FESTAC', 500);
+  INSERT INTO trips (bus_id, origin, destination, trip_date, fare) VALUES (1, 'Ipaja', 'Lekki', '2019/07/13', 200);
+  INSERT INTO trips (bus_id, origin, destination, trip_date, fare) VALUES (2, 'Ijaiye', 'Magodo', '2019/07/13', 300);
+  INSERT INTO trips (bus_id, origin, destination, trip_date, fare) VALUES (3, 'Oshodi', 'FESTAC', '2019/07/13', 500);
   `;
 
     log('Seeding Tables...');
