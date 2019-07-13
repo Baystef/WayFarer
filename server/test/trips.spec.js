@@ -32,6 +32,7 @@ describe('POST /trips', () => {
       bus_id: 4,
       origin: 'Abule Egba',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 1000,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -49,6 +50,7 @@ describe('POST /trips', () => {
       bus_id: 4,
       origin: 'Abule Egba',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 1000,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -67,6 +69,7 @@ describe('POST /trips', () => {
     const newTrip = {
       origin: 'Abule Egba',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 1000,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -85,6 +88,7 @@ describe('POST /trips', () => {
     const newTrip = {
       bus_id: 2,
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 1000,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -103,6 +107,7 @@ describe('POST /trips', () => {
     const newTrip = {
       bus_id: 3,
       origin: 'Abule Egba',
+      trip_date: '2019-12-16',
       fare: 1000,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -117,11 +122,31 @@ describe('POST /trips', () => {
       });
   });
 
+  it('should throw error if trip date is missing', (done) => {
+    const newTrip = {
+      bus_id: 3,
+      origin: 'Abule Egba',
+      destination: 'Lekki',
+      fare: 1000,
+    };
+    request.post('/api/v1/trips').send(newTrip)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.error).to.exist;
+        expect(res.body.status).to.equal('error');
+        expect(res.body.error).to.equal('Trip date is required');
+        done();
+      });
+  });
+
   it('should throw error if fare is missing', (done) => {
     const newTrip = {
       bus_id: 3,
       origin: 'Abule Egba',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
     };
     request.post('/api/v1/trips').send(newTrip)
       .set('Authorization', `Bearer ${adminToken}`)
@@ -140,6 +165,7 @@ describe('POST /trips', () => {
       bus_id: 'five',
       origin: 'Abule Egba',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 400,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -159,6 +185,7 @@ describe('POST /trips', () => {
       bus_id: 6,
       origin: 'A',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 400,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -178,6 +205,7 @@ describe('POST /trips', () => {
       bus_id: 6,
       origin: 'Abule Egba',
       destination: 'L',
+      trip_date: '2019-12-16',
       fare: 400,
     };
     request.post('/api/v1/trips').send(newTrip)
@@ -197,6 +225,7 @@ describe('POST /trips', () => {
       bus_id: 6,
       origin: 'Abule Egba',
       destination: 'Lekki',
+      trip_date: '2019-12-16',
       fare: 4,
     };
     request.post('/api/v1/trips').send(newTrip)

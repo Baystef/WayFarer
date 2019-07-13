@@ -2,6 +2,7 @@ import { Model } from '../models';
 import {
   conflictResponse, internalErrREesponse, successResponse, nullResponse,
 } from '../utils/response';
+import { log } from '../utils';
 
 /**
  * @description houses the methods for the trips endpoint
@@ -26,12 +27,12 @@ class Trips {
   */
   static async createTrip(req, res) {
     const {
-      bus_id, origin, destination, fare,
+      bus_id, origin, destination, trip_date, fare,
     } = req.body;
     const tripColumns = 'bus_id, origin, destination, status';
     const tripClause = `WHERE bus_id=${bus_id}`;
-    const columns = 'bus_id, origin, destination, fare';
-    const values = `${bus_id}, '${origin}', '${destination}', ${fare}`;
+    const columns = 'bus_id, origin, destination, trip_date, fare';
+    const values = `${bus_id}, '${origin}', '${destination}', '${trip_date}', ${fare}`;
     const clause = 'RETURNING *';
 
     try {
@@ -41,6 +42,9 @@ class Trips {
       if (tripExist[0] && tripExist[0].status === 'active') {
         return conflictResponse(res, 'This trip is already created');
       }
+      // if (!moment(new Date(trip_date), 'YYYY-MM-DD').isBefore(moment(), 'day')) {
+      //   return badRequestResponse(res, 'You cannot create a trip in the past');
+      // }
       const makeTrip = await Trips.tripModel().insert(columns, values, clause);
       return successResponse(res, 200, { ...makeTrip[0] });
     } catch (error) {
