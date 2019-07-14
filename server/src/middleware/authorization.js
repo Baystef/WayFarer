@@ -19,7 +19,7 @@ class Authorization {
    */
   static verifyAdmin(req, res, next) {
     try {
-      const token = req.get('Authorization').replace('Bearer ', '');
+      const token = req.get('Authorization').replace('Bearer ', '') || req.headers.token || req.body.token;
       const decoded = verifyToken(token);
       const { is_admin } = decoded;
       if (!is_admin) {
@@ -40,7 +40,7 @@ class Authorization {
    */
   static verifyUser(req, res, next) {
     try {
-      const token = req.get('Authorization').replace('Bearer ', '');
+      const token = req.get('Authorization').replace('Bearer ', '') || req.headers.token || req.body.token;
       const decoded = verifyToken(token);
       req.user = decoded;
       if (!req.user.id) {

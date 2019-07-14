@@ -66,8 +66,8 @@ API BASE URL https://wayfarer-service.herokuapp.com/. It is recommended to attac
 
 | method | route        | description               | data                                          |
 | ------ | ------------ | ------------------------- | ----------------------------------------------|
-| POST   | /auth/signup  | Sign Up                 | `{firstName, lastName, email, password}`                           |
-| POST   | /auth/signin | Sign In                   | `{email, password}` |
+| POST   | /auth/signup | Sign Up                   | `{firstName, lastName, email, password}`      |
+| POST   | /auth/signin | Sign In                   | `{email, password}`                           |
 
 
 
@@ -75,10 +75,10 @@ API BASE URL https://wayfarer-service.herokuapp.com/. It is recommended to attac
 
 | method | route          | description             | data                                 |
 | ------ | -------------- | ----------------------- | ------------------------------------ |
-| POST    | /bookings      | Create a booking  |   `{trip_id, seat_number}`                |
-| GET    | /bookings  | Get all bookings           |                                       |
-| DELETE    | /bookings/:bookingId  | Delete a booking           |                         |
-| PATCH    | /bookings/:bookingId  | Change already booked seat number | `{seat_number}`   |
+| POST   | /bookings      | Create a booking        |   `{trip_id, seat_number}`           |
+| GET    | /bookings      | Get all bookings        |                                      |
+| DELETE | /bookings/:booking_id | Delete a booking |                                      |
+| PATCH  | /bookings/:booking_id | Change already booked seat number | `{seat_number}`     |
 
 
 
@@ -86,18 +86,18 @@ API BASE URL https://wayfarer-service.herokuapp.com/. It is recommended to attac
 
 | method | route            | description          | data                            |
 | ------ | ---------------- | -------------------- | ------------------------------- |
-| POST    | /buses           | Add a bus |  `{number_plate, manufacturer, year, model, capacity}`                               |
+| POST   | /buses           | Add a bus |  `{number_plate, manufacturer, year, model, capacity}`|
            
 
 ## Trip endpoints `/api/v1/trips`
 
 | method | route          | description             | data                                 |
 | ------ | -------------- | ----------------------- | ------------------------------------ |
-| POST    | /trips      | Create a trip  |   `{ bus_id, origin, destination, fare}`                                   |
-| GET    | /trips  | Get all trips           |             |
-| GET    | /trips?origin  | Get trips filtered by origin           |  |
-| GET    | /trips?destination  | Get trips filtered by destination |        |
-| PATCH    | /trips/:tripId  | Cancel a trip         |                 |
+| POST   | /trips      | Create a trip  |   `{ bus_id, origin, destination, fare}`         |
+| GET    | /trips  | Get all trips           |                                             |
+| GET    | /trips?origin  | Get trips filtered by origin           |                       |
+| GET    | /trips?destination  | Get trips filtered by destination |                       |
+| PATCH  | /trips/:trip_id  | Cancel a trip       |                                        |
 
 
 
@@ -105,15 +105,15 @@ API BASE URL https://wayfarer-service.herokuapp.com/. It is recommended to attac
 
 | method | route            | description               | 
 | ------ | -----------------| ------------------------- |
-| POST    | /api/v1/buses  | Add a bus               |
-| POST    | /api/v1/trips | Create a trip          |
-| PATCH   | /api/v1/trips/:tripId   | Cancel a trip           |
+| POST   | /api/v1/buses    | Add a bus                 |
+| POST   | /api/v1/trips    | Create a trip             |
+| PATCH  | /api/v1/trips/:trip_id | Cancel a trip       |
 
 
 
 
 # API Docs
-
+https://wayfarer-service.herokuapp.com/api/v1/docs
 # App URL
 https://wayfarer-service.herokuapp.com/
 # Author

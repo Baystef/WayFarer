@@ -4,9 +4,7 @@ import { check } from 'express-validator';
  * @description Checks all fields of the auth request body
  */
 const signupValidate = [
-  check('first_name')
-    .not()
-    .isEmpty()
+  check('first_name').not().isEmpty()
     .withMessage('First name is required')
     .trim()
     .isLength({ min: 3, max: 25 })
@@ -37,14 +35,14 @@ const signupValidate = [
     .not()
     .isEmpty()
     .withMessage('Password is required')
-    .not()
-    .isIn(['password', 'PASSWORD', 12345678, 87654321])
-    .withMessage('Password is too simple')
+    // .not()
+    // .isIn(['password', 'PASSWORD', 12345678, 87654321])
+    // .withMessage('Password is too simple')
     .trim()
-    .isLength({ min: 8, max: 100 })
-    .withMessage('Password must be atleast 8 to 100 characters')
-    .matches(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,100}$/)
-    .withMessage('Password must contain letters and atleast 1 number'),
+    .isLength({ min: 5, max: 100 })
+    .withMessage('Password must be atleast 8 to 100 characters'),
+  // .matches(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,100}$/)
+  // .withMessage('Password must contain letters and atleast 1 number'),
 ];
 
 const signinValidate = [

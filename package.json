@@ -12,6 +12,7 @@
     "migrate": "set DEBUG=dev && babel-node ./server/src/schema/migration",
     "heroku:migrate": "node ./build/src/schema/migration",
     "seed": "set DEBUG=dev && babel-node ./server/src/schema/seed",
+    "heroku:seed": "node ./build/src/schema/seed",
     "migrate:seed": "set DEBUG=dev && npm run migrate && npm run seed"
   },
   "repository": {

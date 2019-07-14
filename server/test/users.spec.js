@@ -172,7 +172,7 @@ describe('POST auth/signup', () => {
       first_name: 'Don',
       last_name: 'Jazzy',
       email: 'donjazzy@yahoo.com',
-      password: 'secre',
+      password: 'sec',
     };
     request.post('/api/v1/auth/signup').send(newUser)
       .end((err, res) => {
