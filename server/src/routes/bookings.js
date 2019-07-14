@@ -16,9 +16,9 @@ router.post('/', verifyUser, validate('makeBooking'), checkValidationResult, boo
 router.get('/', verifyUser, getBookings);
 
 // Delete a booking
-router.delete('/:bookingId', verifyUser, validate('deleteBooking'), checkValidationResult, deleteBooking);
+router.delete('/:booking_id', verifyUser, validate('deleteBooking'), checkValidationResult, deleteBooking);
 
 // Change booked seat
-router.patch('/:bookingId', verifyUser, validate('changeSeat'), checkValidationResult, changeSeat);
+router.patch('/:booking_id', verifyUser, validate('changeSeat'), checkValidationResult, changeSeat);
 
 export default router;

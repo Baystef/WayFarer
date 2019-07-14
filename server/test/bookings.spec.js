@@ -121,7 +121,7 @@ describe('GET /bookings', () => {
   });
 });
 
-describe('PATCH /bookings/:bookingId', () => {
+describe('PATCH /bookings/:booking_id', () => {
   it('should update a seat number successfully', (done) => {
     const seat = {
       seat_number: 2,
@@ -152,7 +152,7 @@ describe('PATCH /bookings/:bookingId', () => {
   });
 });
 
-describe('DELETE /bookings/:bookingId', () => {
+describe('DELETE /bookings/:booking_id', () => {
   it('should delete a booking successfully', (done) => {
     request.delete('/api/v1/bookings/1').set('Authorization', `Bearer ${user1token}`)
       .end((err, res) => {

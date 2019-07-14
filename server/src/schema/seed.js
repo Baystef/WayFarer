@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import { pool } from '../models';
 import { Auth, log } from '../utils';
 
