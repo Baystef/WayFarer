@@ -9,21 +9,23 @@ const makeBookingValidate = [
     .isInt({ min: 1 })
     .withMessage('Trip ID is invalid'),
 
-  check('seat_number').not().isEmpty()
-    .withMessage('Seat number is required')
+  check('seat_number').optional()
     .isInt({ min: 1 })
     .withMessage('Seat number is invalid'),
 ];
 
 const deleteBookingValidate = [
-  param('bookingId').not().isEmpty()
+  param('booking_id').not().isEmpty()
     .withMessage('Booking ID parameter is required')
     .isInt({ min: 1 })
     .withMessage('Booking ID is invalid'),
 ];
 
 const changeSeatValidate = [
-  makeBookingValidate[1],
+  check('seat_number').not().isEmpty()
+    .withMessage('Seat number is required')
+    .isInt({ min: 1 })
+    .withMessage('Seat number is invalid'),
   ...deleteBookingValidate,
 ];
 
