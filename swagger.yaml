@@ -359,6 +359,9 @@ definitions:
         type: string
       destination:
         type: string
+      trip_date:
+        type: string
+        format: date
       fare:
         type: integer
         format: int32
@@ -366,12 +369,12 @@ definitions:
     - bus_id
     - origin
     - destination
+    - trip_date
     - fare
   MakeBookingEndpointRequest:
     title: MakeBookingEndpointRequest
     example:
       trip_id: 1
-      seat_number: 5
     type: object
     properties:
       trip_id:
@@ -382,7 +385,6 @@ definitions:
         format: int32
     required:
     - trip_id
-    - seat_number
   ChangeSeatEndpointRequest:
     title: ChangeSeatEndpointRequest
     example:
