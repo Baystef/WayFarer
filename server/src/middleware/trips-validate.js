@@ -24,7 +24,9 @@ const createTripValidate = [
     .withMessage('Destination should be between 2 to 50 characters'),
 
   check('trip_date').not().isEmpty()
-    .withMessage('Trip date is required'),
+    .withMessage('Trip date is required')
+    .isISO8601()
+    .withMessage('Invalid date format. Use format YYYY-MM-DD'),
 
   check('fare').not().isEmpty()
     .withMessage('Fare is required')
