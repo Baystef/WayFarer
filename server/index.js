@@ -24,6 +24,22 @@ app.get('/', (req, res) => {
   });
 });
 
+app.all('*', (req, res) => {
+  res.status(404).json({
+    status: 'error',
+    error: 'Route not found!',
+  });
+});
+
+app.use((err, req, res, next) => {
+  log(err.message);
+  res.status((err.status >= 100 && err.status < 600) ? err.status : 500).json({
+    status: 'error',
+    error: 'Invalid request. Please ensure you entered the right thing',
+  });
+});
+
+
 const port = process.env.PORT || 4800;
 
 app.listen(port, () => log(`App is listening on port ${port}`));

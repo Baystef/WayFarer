@@ -1,8 +1,8 @@
+import moment from 'moment';
 import { Model } from '../models';
 import {
-  conflictResponse, internalErrREesponse, successResponse, nullResponse,
+  conflictResponse, internalErrREesponse, successResponse, nullResponse, badRequestResponse,
 } from '../utils/response';
-import { log } from '../utils';
 
 /**
  * @description houses the methods for the trips endpoint
@@ -42,9 +42,9 @@ class Trips {
       if (tripExist[0] && tripExist[0].status === 'active') {
         return conflictResponse(res, 'This trip is already created');
       }
-      // if (!moment(new Date(trip_date), 'YYYY-MM-DD').isBefore(moment(), 'day')) {
-      //   return badRequestResponse(res, 'You cannot create a trip in the past');
-      // }
+      if (moment(trip_date).diff(moment(0, 'HH'), 'day') < 0) {
+        return badRequestResponse(res, 'You cannot create a trip in the past');
+      }
       const makeTrip = await Trips.tripModel().insert(columns, values, clause);
       return successResponse(res, 200, { ...makeTrip[0] });
     } catch (error) {
