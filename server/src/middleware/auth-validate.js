@@ -35,14 +35,9 @@ const signupValidate = [
     .not()
     .isEmpty()
     .withMessage('Password is required')
-    // .not()
-    // .isIn(['password', 'PASSWORD', 12345678, 87654321])
-    // .withMessage('Password is too simple')
     .trim()
     .isLength({ min: 5, max: 100 })
     .withMessage('Password must be atleast 8 to 100 characters'),
-  // .matches(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,100}$/)
-  // .withMessage('Password must contain letters and atleast 1 number'),
 ];
 
 const signinValidate = [

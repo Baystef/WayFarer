@@ -35,7 +35,7 @@ $ git clone https://github.com/Baystef/WayFarer.git
 $ cd WayFarer
 
 $ npm i
- 
+$ npm run migrate:seed 
 $ npm run start:dev
 ```
 
@@ -66,7 +66,7 @@ API BASE URL https://wayfarer-service.herokuapp.com/. It is recommended to attac
 
 | method | route        | description               | data                                          |
 | ------ | ------------ | ------------------------- | ----------------------------------------------|
-| POST   | /auth/signup | Sign Up                   | `{firstName, lastName, email, password}`      |
+| POST   | /auth/signup | Sign Up                   | `{first_name, last_name, email, password}`    |
 | POST   | /auth/signin | Sign In                   | `{email, password}`                           |
 
 
@@ -93,11 +93,11 @@ API BASE URL https://wayfarer-service.herokuapp.com/. It is recommended to attac
 
 | method | route          | description             | data                                 |
 | ------ | -------------- | ----------------------- | ------------------------------------ |
-| POST   | /trips      | Create a trip  |   `{ bus_id, origin, destination, fare}`         |
-| GET    | /trips  | Get all trips           |                                             |
+| POST   | /trips      | Create a trip  |`{ bus_id, origin, destination, trip_date, fare}` |
+| GET    | /trips         | Get all trips           |                                      |
 | GET    | /trips?origin  | Get trips filtered by origin           |                       |
 | GET    | /trips?destination  | Get trips filtered by destination |                       |
-| PATCH  | /trips/:trip_id  | Cancel a trip       |                                        |
+| PATCH  | /trips/:trip_id | Cancel a trip          |                                      |
 
 
 

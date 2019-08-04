@@ -233,7 +233,7 @@ paths:
         200:
           description: ''
           headers: {}
-  /bookings/{booking_id}:
+  /bookings/{:booking_id}:
     delete:
       description: This endpoint deletes a specific booking that was made by the current user `params = bookingId`
       summary: Delete a Booking Endpoint
@@ -325,6 +325,7 @@ definitions:
     example:
       number_plate: DA485YZ
       manufacturer: Mercedes
+      year: 2008
       model: Polo150
       capacity: 25
     type: object
@@ -333,6 +334,9 @@ definitions:
         type: string
       manufacturer:
         type: string
+      year:
+        type: integer
+        format: int32
       model:
         type: string
       capacity:
@@ -341,6 +345,7 @@ definitions:
     required:
     - number_plate
     - manufacturer
+    - year
     - model
     - capacity
   CreateTripsEndpointRequest:
@@ -349,6 +354,7 @@ definitions:
       bus_id: 1
       origin: Ikeja Along
       destination: Oshodi
+      trip_date: 2019-07-25
       fare: 500
     type: object
     properties:
